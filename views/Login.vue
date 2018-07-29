@@ -8,15 +8,18 @@
                 <el-input v-model="form.username" placeholder="用户名" prefix-icon="myicon myicon-user"></el-input>
             </el-form-item>
             <el-form-item prop='password'>
-                <el-input v-model="form.password" placeholder="密码" prefix-icon="myicon myicon-key"></el-input>
+                <el-input v-model="form.password" placeholder="密码" prefix-icon="myicon myicon-key" type="password"></el-input>
             </el-form-item>
             <el-form-item >
-                <el-button type="primary" class='login-btn'>登陆</el-button>
+                <el-button type="primary" class='login-btn' @click="loginSubmit('form')">登陆</el-button>
             </el-form-item>
         </el-form>
     </div>
 </template>
 <script>
+// 引入用户验证
+import {checkUser} from '../src/api/index.js'
+
 export default {
   data() {
     return {
@@ -33,6 +36,32 @@ export default {
         ],
       }
     };
+  },
+  methods:{
+    loginSubmit(formName){
+      this.$refs[formName].validate((valid) =>{
+        if(valid){
+          // alert('校验通过');
+          checkUser(this.form).then(res => {
+            // 成功即跳转页面
+            console.log(res)
+            if (res.meta.status === 200){
+              console.log('登陆成功')
+              this.$router.push({name:'Home'})
+            }else {
+              // 失败则弹出提示框
+              this.$message({
+                message: res.meta.msg,
+                type: 'error'
+              })
+            }
+          })
+        }else{
+          alert('校验不通过');
+          
+        }
+      })
+    }
   }
 };
 </script>
