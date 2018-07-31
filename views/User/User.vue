@@ -13,7 +13,7 @@
     </el-row>
     <!-- 搜索框 -->
     <el-row>
-      <!-- 给非DOM元素绑定keydown事件时需要使用native方法-->
+      <!-- 给非DOM元素绑定keydown事件时需要使用.native的修饰符-->
       <el-input placeholder="请输入内容"  class="search-input" v-model="query" @keydown.native.enter='initList'>
         <el-button slot="append" icon="el-icon-search" @click="initList"></el-button>
       </el-input>
@@ -74,10 +74,10 @@
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        :page-sizes="[5, 10, 15, 20]"
-        :page-size="20"
+        :page-sizes="[10, 20, 30, 40]"
+        :page-size="50"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="50">
+        :total="total">
       </el-pagination>
     </div>
   </div>
@@ -89,6 +89,9 @@ export default {
     return {
       userList: [],
       query: '',
+      total: 0,
+      pagenum: 1,
+      pagesize: 10,
       value1: ""
     };
   },
@@ -108,13 +111,13 @@ export default {
     },
     // 初始化表格数据
     initList() {
-      this.loading = true;
-      getUserList({ params: { query: this.query, pagenum: 1, pagesize: 5 } }).then(
+      // this.loading = true;
+      getUserList({ params: { query: this.query, pagenum:this.pagenum, pagesize: this.pagesize} }).then(
         res => {
           console.log(res);
           this.userList = res.data.users;
           this.total = res.data.total;
-          this.loading = false;
+          // this.loading = false;
         }
       );
     }
