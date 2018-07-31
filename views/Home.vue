@@ -3,33 +3,34 @@
     <el-container>
         <!-- aside部分 -->
       <el-aside width="auto" >
-        <el-menu default-active="2" class="el-menu-admin" @open="handleOpen" @close="handleClose" :collapse="isCollapse">
-          <el-submenu index="1">
+        <el-menu :router='true' class="el-menu-admin" @open="handleOpen" @close="handleClose" :collapse="isCollapse">
+          <el-submenu index='1'>
             <template slot="title">
               <i class="el-icon-location"></i>
               <span>用户管理</span>
             </template>
-            <el-menu-item index="1-1">
+            <el-menu-item index="/user">
               <i class="el-icon-menu"></i>
               <span slot="title">用户列表</span>
             </el-menu-item>
           </el-submenu>       
         </el-menu>
       </el-aside>
-    <el-container>
+   
+      <el-container> 
         <!-- header部分 -->
-        <el-header>
-          <i class='myicon myicon-menu toggle-btn' @click= 'toggleCollapse'></i>
-          <div class="system-title">电商后台管理系统</div>
-          <div>
-            <span class="welcome">你好,{{$store.getters.username}}</span>
-            <el-button type="text" @click='logout'>退出</el-button>
-          </div>
-        </el-header>
+      <el-header>
+        <i class='myicon myicon-menu toggle-btn' @click= 'toggleCollapse'></i>
+        <div class="system-title">电商后台管理系统</div>
+        <div>
+          <span class="welcome">你好,{{$store.getters.username}}</span>
+          <el-button type="text" @click='logout'>退出</el-button>
+        </div>
+      </el-header>
         <!-- main部分 -->
-        <el-main>
-          <router-view></router-view>
-        </el-main>
+      <el-main>
+        <router-view></router-view>
+      </el-main>
       </el-container>
     </el-container>
   </div>

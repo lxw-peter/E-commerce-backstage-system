@@ -3,6 +3,8 @@ import Router from 'vue-router'
 import Login from '../../views/Login'
 import Home from '../../views/Home'
 import Welcome from '../../views/Welcome/Welcome.vue'
+import User from '../../views/User/User.vue'
+
 Vue.use(Router)
 
 export default new Router({
@@ -22,6 +24,11 @@ export default new Router({
           path: '/welcome',
           name: 'Welcome',
           component: Welcome
+        },
+        {
+          path: '/user',
+          name: 'User',
+          component: User
         }
       ]
     }
