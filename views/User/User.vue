@@ -17,7 +17,7 @@
       <el-input placeholder="请输入内容"  class="search-input" v-model="query" @keydown.native.enter='initList'>
         <el-button slot="append" icon="el-icon-search" @click="initList"></el-button>
       </el-input>
-      <el-button type="success" plain>添加用户</el-button>
+      <el-button type="success" plain @click="addDialogFormVisible=true">添加用户</el-button>
     </el-row>
     <!-- 列表 -->
     <el-table    
@@ -51,11 +51,7 @@
         label="用户状态"
         width="120">
         <template slot-scope="scope">
-          <el-switch
-            style="display: block"
-            v-model="value1"
-            active-color="#13ce66"
-            inactive-color="#ff4949">
+          <el-switch style="display: block" v-model="scope.row.mg_state" @change="changeUserState(scope.row)" active-color="#13ce66" inactive-color="#ff4949" >
           </el-switch>
         </template>
       </el-table-column>
@@ -80,10 +76,31 @@
         :total="total">
       </el-pagination>
     </div>
+    <!-- 添加用户 -->
+    <el-dialog title="添加用户" :visible.sync="addDialogFormVisible">
+      <el-form :model="addForm" label-width="80px" :rules="rules" ref="addUserForm">
+        <el-form-item label="用户名" prop='username'>
+          <el-input v-model="addForm.username" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="密码" prop='password'>
+          <el-input v-model="addForm.password" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="邮箱" prop='email'>
+          <el-input v-model="addForm.email" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="电话" prop='mobile'>
+          <el-input v-model="addForm.mobile" auto-complete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="addDialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="addUserSubmit('addUserForm')">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
-import { getUserList } from "../../src/api";
+import { getUserList,changeUserState,addUser} from "../../src/api";
 export default {
   data() {
     return {
@@ -92,7 +109,30 @@ export default {
       total: 0,
       pagenum: 1,
       pagesize: 10,
-      value1: ""
+      addDialogFormVisible: false,
+      addForm: {
+        username: '',
+        password: '',
+        email: '',
+        mobile: ''
+      },
+      // 添加用户表单验证
+      rules: {
+        username: [
+          { required: true, message: '请输入用户名', trigger: 'blur'}
+        ],
+        password: [
+          { required: true, message: '请输入密码', trigger: 'blur'}
+        ],
+        email: [
+          { required: true, message: '请输入邮箱地址', trigger: 'blur'},
+          { type: 'email', message: '请输入邮箱地址', trigger: 'blur,change'}
+
+        ],
+        mobile: [
+          { required: true, message: '电话不能为空', trigger: 'blur'}
+        ]
+      }
     };
   },
   created() {
@@ -120,6 +160,43 @@ export default {
           // this.loading = false;
         }
       );
+    },
+    // 改变用户状态
+    changeUserState (row) {
+      console.log(row)
+      changeUserState({uid: row.id,type:row.mg_state}).then(res => {
+        if (res.meta.status === 200) {
+          // 弹出状态提醒
+          this.$message({
+            type: 'success',
+            message: '修改用户状态成功'    
+          })
+        } else {
+          this.$message({
+            type: 'warning',
+            message: res.meta.msg 
+          })
+        }
+      })
+    },
+    // 添加用户
+    addUserSubmit (formName) {
+      this.$refs[formName].validate (valide => {
+        if (valide) {
+          // 执行添加用户方法
+          addUser(this.addForm).then(res => {
+            console.log(res)
+            if (res.meta.status === 201) {
+              this.$message({
+                type: 'success',
+                message: '创建用户成功'
+              })
+            }
+            this.addDialogFormVisible = false
+            this.initList()
+          })
+        }
+      })
     }
   }
 };

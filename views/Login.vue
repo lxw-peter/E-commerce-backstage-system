@@ -60,7 +60,6 @@ export default {
           })
         }else{
           alert('校验不通过');
-          
         }
       })
     }
