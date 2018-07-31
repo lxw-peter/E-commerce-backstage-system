@@ -6,14 +6,31 @@ import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import './styles/index.scss'
-
+import store from '@/store/store'
 Vue.use(ElementUI)
 Vue.config.productionTip = false
+// 注册全局守卫,作用是路由跳转前,对路由进行判断,防止未登录的用户跳转到其他页面去
+router.beforeEach((to, from, next) => {
+  let token = localStorage.getItem('mytoken')
+  // 如果已经登陆,那我不干涉你,让你随便访问
+  if (token) {
+    next()
+  } else {
+    if (to.path !== '/login') {
+      // 如果没有登陆,当你访问其他需要登陆的页面,那我就让你跳到登陆页面
+      next({path: '/login'})
+    } else {
+      // 如果没有登陆,当你访问的longin ,那么就不干涉,让你访问
+      next()
+    }
+  }
+})
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

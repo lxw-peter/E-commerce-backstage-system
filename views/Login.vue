@@ -46,6 +46,8 @@ export default {
             // 成功即跳转页面
             console.log(res)
             if (res.meta.status === 200){
+              localStorage.setItem('mytoken',res.data.token)
+              this.$store.commit('setUsername',res.data.username)
               console.log('登陆成功')
               this.$router.push({name:'Home'})
             }else {
@@ -70,7 +72,7 @@ export default {
   position: fixed;
   width: 100%;
   height: 100%;
-  background-color: #70a0b1;
+  background-color: #b3c0d1;
 
   .container {
     position: absolute;
