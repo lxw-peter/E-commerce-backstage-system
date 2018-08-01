@@ -31,3 +31,23 @@ export const changeUserState = params => {
 export const addUser = params => {
   return axios.post('users', params).then(res => res.data)
 }
+// 根据用户id获取信息
+export const getUserById = params => {
+  return axios.get(`users/${params}`, params).then(res => res.data)
+}
+// 编辑用户信息
+export const editUser = params => {
+  return axios.put(`users/${params.id}`, params).then(res => res.data)
+}
+// 删除用户信息
+export const deleteUser = params => {
+  return axios.delete(`users/${params}`).then(res => res.data)
+}
+// 获取用户角色信息
+export const getRoleList = params => {
+  return axios.get('roles').then(res => res.data)
+}
+// 分配用户角色
+export const grantUserRole = params => {
+  return axios.put(`users/${params.id}/role`, {id: params.id, rid: params.rid}).then(res => res.data)
+}
