@@ -3,7 +3,7 @@
     <!-- 导航条 -->
     <el-row>
       <el-col :span="24">   
-        <el-breadcrumb separator-class="el-icon-arrow-right">
+        <el-breadcrumb separator='/'>
         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
         <el-breadcrumb-item>活动管理</el-breadcrumb-item>
         <el-breadcrumb-item>活动列表</el-breadcrumb-item>
@@ -21,6 +21,7 @@
     </el-row>
     <!-- 列表 -->
     <el-table  
+      :loading="true"
       class="margin-15"  
       :data = 'userList'
       border
@@ -183,7 +184,8 @@ export default {
         ],
         mobile: [
           { required: true, message: '电话不能为空', trigger: 'blur'}
-        ]
+        ],
+        loading: true
       }
     };
   },
