@@ -1,32 +1,19 @@
+
 <template>
   <div class='home'>
     <el-container>
         <!-- aside部分 -->
       <el-aside width="auto" >
         <el-menu :router='true' class="el-menu-admin" @open="handleOpen" @close="handleClose" :collapse="isCollapse">
-          <el-submenu index='1'>
+          <el-submenu :index='item.path' v-for="item in menusData" :key="item.id">
             <template slot="title">
               <i class="el-icon-location"></i>
-              <span>用户管理</span>
+              <span>{{item.authName}}</span>
             </template>
-            <el-menu-item index="/user">
+            <el-menu-item :index="tag.path" v-for="tag in item.children" :key="tag.id">
               <i class="el-icon-menu"></i>
-              <span slot="title">用户列表</span>
+              <span slot="title">{{tag.authName}}</span>
             </el-menu-item>
-          </el-submenu>
-          <el-submenu index='2'>
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>用户权限</span>
-            </template>
-            <el-menu-item index="/roles">
-              <i class="el-icon-menu"></i>
-              <span slot="title">角色列表</span>
-            </el-menu-item>
-            <el-menu-item index="/rights">
-            <i class="el-icon-menu"></i>
-            <span slot="title">权限列表</span>
-          </el-menu-item>
           </el-submenu>        
         </el-menu>
       </el-aside>
@@ -51,12 +38,13 @@
 </template>
 <script>
 // import {getUSerList} from '@/api'
-import { getUserList } from "../src/api";
+import {getUserList, menusRight} from "../src/api";
 
 export default {
   data() {
     return {
-      isCollapse: false
+      isCollapse: false,
+      menusData: []
     };
   },
   methods: {
@@ -74,9 +62,14 @@ export default {
       localStorage.removeItem('mytoken')
       // 跳转到登陆界面
       this.$router.push({name:'Login'})
-    }
+    },
   },
-
+  created() {
+    menusRight().then(res => {
+      // console.log(res)
+      this.menusData = res.data
+    })
+  },
   mounted() {
     let params = { params: { qurey: "", pagenum: 1, pagesize: 1 } };
     getUserList(params).then(res => {

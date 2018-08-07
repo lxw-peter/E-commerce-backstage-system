@@ -60,9 +60,9 @@
 
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button type="primary" icon="el-icon-edit" plain @click="showEditDialog(scope.row)"></el-button>
-          <el-button type="danger" icon="el-icon-delete" plain @click="showDeleteDialog(scope.row)"></el-button>
-          <el-button type="warning" icon="el-icon-check" plain @click="showGrantDialog(scope.row)"></el-button>
+          <el-button type="primary" icon="el-icon-edit" title="编辑用户" plain @click="showEditDialog(scope.row)"></el-button>
+          <el-button type="danger" icon="el-icon-delete" title="删除用户" plain @click="showDeleteDialog(scope.row)"></el-button>
+          <el-button type="warning" icon="el-icon-check" title="分配角色" plain @click="showGrantDialog(scope.row)"></el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -287,7 +287,7 @@ export default {
     },
     // 展示删除用户对话框
     showDeleteDialog(row){
-      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+      this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'

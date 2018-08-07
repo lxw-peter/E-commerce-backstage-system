@@ -28,8 +28,8 @@ export default new Router({
           component: Welcome
         },
         {
-          path: 'user',
-          name: 'User',
+          path: 'users',
+          name: 'Users',
           component: User
         },
         {
