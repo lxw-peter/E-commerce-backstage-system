@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const baseURL = 'http://localhost:8888/api/private/v1/'
+const baseURL = 'http://111.231.234.250:8888/api/private/v1/'
 axios.defaults.baseURL = baseURL
 
 // 添加请求拦截器
