@@ -3,7 +3,7 @@ import axios from 'axios'
 const baseURL = 'http://localhost:8888/api/private/v1/'
 axios.defaults.baseURL = baseURL
 
-// // 添加请求拦截器
+// 添加请求拦截器
 axios.interceptors.request.use(function (config) {
   // 将 token 给到一个前后台约定好的key中，作为请求发送
   let token = localStorage.getItem('mytoken')
@@ -66,4 +66,12 @@ export const grantRoleRight = (roleId, rids) => {
 // 左侧菜单权限
 export const menusRight = () => {
   return axios.get('menus').then(res => res.data)
+}
+// 获取商品分类列表
+export const getCategories = (params) => {
+  return axios.get('categories', {params: params}).then(res => res.data)
+}
+// 添加分类
+export const addCategories = params => {
+  return axios.post('categories', params).then(res => res.data)
 }
