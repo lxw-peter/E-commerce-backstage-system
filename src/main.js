@@ -7,6 +7,8 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import './styles/index.scss'
 import store from '@/store/store'
+// import echarts from 'echarts'
+// Vue.prototype.$echarts = echarts
 Vue.use(ElementUI)
 Vue.config.productionTip = false
 // 注册全局守卫,作用是路由跳转前,对路由进行判断,防止未登录的用户跳转到其他页面去

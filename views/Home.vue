@@ -1,10 +1,9 @@
-
 <template>
   <div class='home'>
     <el-container>
         <!-- aside部分 -->
       <el-aside width="auto" >
-        <el-menu :router='true' class="el-menu-admin" @open="handleOpen" @close="handleClose" :collapse="isCollapse">
+        <el-menu :router='true' :unique-opened='true' class="el-menu-admin" @open="handleOpen" @close="handleClose" :collapse="isCollapse">
           <el-submenu :index='item.path' v-for="item in menusData" :key="item.id">
             <template slot="title">
               <i class="el-icon-location"></i>
@@ -73,7 +72,7 @@ export default {
   mounted() {
     let params = { params: { qurey: "", pagenum: 1, pagesize: 1 } };
     getUserList(params).then(res => {
-      console.log(res);
+      // console.log(res);
     });
   }
 };

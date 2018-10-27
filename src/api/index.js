@@ -75,3 +75,15 @@ export const getCategories = (params) => {
 export const addCategories = params => {
   return axios.post('categories', params).then(res => res.data)
 }
+// 获取商品列表
+export const getGoodsList = params => {
+  return axios.get('goods', params).then(res => res.data)
+}
+// 获取订单列表
+export const getOrderList = params => {
+  return axios.get('orders', params).then(res => res.data)
+}
+// 数据统计
+export const statistics = params => {
+  return axios.get(`reports/type/${params}`).then(res => res.data)
+}

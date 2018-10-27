@@ -1,6 +1,6 @@
 # lxw-admin
 
-> A Vue.js project
+> 线上地址：http://www.lxw-peter.cn/manage/
 
 ## Build Setup
 
@@ -40,7 +40,9 @@ npm run build --report
 
    ![](https://ws1.sinaimg.cn/large/0061BkIsly1fw2xt8w7k2j31hc0u0ado.jpg)
 
-6. 页面弹窗
+6. 数据统计![](https://ws1.sinaimg.cn/large/0061BkIsly1fwn2nd1pboj312j0rqdir.jpg)
+
+7. 页面弹窗
 
 ![](https://ws1.sinaimg.cn/large/0061BkIsly1fw2xzvljdoj31hc0u0whu.jpg)
 
